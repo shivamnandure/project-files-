@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Doe - Portfolio</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            padding-top: 56px;
+            overflow-x: hidden;
+        }
+        
+        /* Navbar with glassmorphism */
+        .navbar {
+            backdrop-filter: blur(10px);
+            background: rgba(44, 62, 80, 0.95) !important;
+            box-shadow: 0 2px 20px rgba(0,0,0,.1);
+            transition: all 0.3s;
+        }
+        
+        .navbar.scrolled {
+            box-shadow: 0 4px 30px rgba(0,0,0,.2);
+        }
+        
+        /* Hero Section with animated gradient */
+        #home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        #home .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .typing-text {
+            border-right: 2px solid white;
+            animation: blink 0.7s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: white; }
+        }
+        
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,.2);
+            transition: transform 0.3s;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+        
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        /* Skills Progress Bars */
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 10px;
+            overflow: visible;
+        }
+        
+        .progress-bar {
+            border-radius: 10px;
+            position: relative;
+            overflow: visible;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        /* Animated Counter */
+        .counter-box {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,.1);
+            transition: transform 0.3s;
+        }
+        
+        .counter-box:hover {
+            transform: translateY(-10px);
+        }
+        
+        .counter-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .counter-label {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        /* Project Cards with advanced hover */
+        .project-card {
+            transition: all 0.3s;
+            height: 100%;
+            overflow: hidden;
+            border: none;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+        
+        .project-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .project-card:hover .project-img {
+            transform: scale(1.1);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(102, 126, 234, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-overlay a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: transform 0.3s;
+        }
+        
+        .project-overlay a:hover {
+            transform: scale(1.2);
+        }
+        
+        /* Timeline for Experience/Education */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--primary-color);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.1);
+            width: calc(50% - 40px);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+            
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+        
+        /* Testimonials */
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.1);
+            position: relative;
+            margin-top: 2rem;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+        
+        .stars {
+            color: #ffc107;
+        }
+        
+        /* Contact Form Enhancement */
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            margin: 0 5px;
+            color: white;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+            color: white;
+        }
+        
+        /* Back to Top Button */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        #backToTop:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        #backToTop.show {
+            display: flex;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">
+                <i class="bi bi-code-slash"></i> John Doe
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experience">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="text-center">
+        <div class="content">
+            <div class="container" data-aos="fade-up">
+                <h1 class="display-3 fw-bold mb-3">Hi, I'm John Doe</h1>
+                <h2 class="h3 mb-4">I'm a <span id="typingText" class="typing-text">Full Stack Developer</span></h2>
+                <p class="lead mb-4">Transforming ideas into elegant digital solutions</p>
+                <a href="#projects" class="btn btn-light btn-lg me-2">
+                    <i class="bi bi-briefcase me-2"></i>View My Work
+                </a>
+                <a href="#contact" class="btn btn-outline-light btn-lg">
+                    <i class="bi bi-envelope me-2"></i>Contact Me
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="0">
+                    <div class="counter-box">
+                        <i class="bi bi-trophy text-warning display-4 mb-2"></i>
+                        <div class="counter-number" data-target="50">0</div>
+                        <div class="counter-label">Projects Completed</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="counter-box">
+                        <i class="bi bi-people text-success display-4 mb-2"></i>
+                        <div class="counter-number" data-target="35">0</div>
+                        <div class="counter-label">Happy Clients</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="counter-box">
+                        <i class="bi bi-cup-hot text-danger display-4 mb-2"></i>
+                        <div class="counter-number" data-target="1000">0</div>
+                        <div class="counter-label">Cups of Coffee</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="counter-box">
+                        <i class="bi bi-star text-primary display-4 mb-2"></i>
+                        <div class="counter-number" data-target="5">0</div>
+                        <div class="counter-label">Years Experience</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center" data-aos="fade-up">About Me</h2>
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center mb-4 mb-md-0" data-aos="fade-right">
+                    <img src="https://via.placeholder.com/200" alt="Profile Photo" class="rounded-circle profile-img">
+                </div>
+                <div class="col-md-8" data-aos="fade-left">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="card-title mb-3">Full Stack Developer & Designer</h3>
+                            <p class="card-text text-muted">
+                                I'm a passionate full-stack developer with over 5 years of experience in building web applications. 
+                                I specialize in modern JavaScript frameworks, responsive design, and creating intuitive user experiences.
+                            </p>
+                            <p class="card-text text-muted">
+                                When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, 
+                                or enjoying a good cup of coffee while reading tech blogs.
+                            </p>
+                            <div class="mt-4">
+                                <span class="badge bg-primary me-2 mb-2">JavaScript</span>
+                                <span class="badge bg-primary me-2 mb-2">React</span>
+                                <span class="badge bg-primary me-2 mb-2">Node.js</span>
+                                <span class="badge bg-primary me-2 mb-2">Python</span>
+                                <span class="badge bg-primary me-2 mb-2">Bootstrap</span>
+                                <span class="badge bg-primary me-2 mb-2">MongoDB</span>
+                            </div>
+                            <div class="mt-4">
+                                <a href="#" class="btn btn-primary me-2">
+                                    <i class="bi bi-download me-2"></i>Download CV
+                                </a>
+                                <a href="#contact" class="btn btn-outline-primary">
+                                    <i class="bi bi-chat-dots me-2"></i>Let's Talk
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center" data-aos="fade-up">My Skills</h2>
+            <div class="row">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>HTML/CSS</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>JavaScript</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>React.js</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Node.js</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Python</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Database (SQL/NoSQL)</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>UI/UX Design</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-name">
+                            <span>Git & DevOps</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center" data-aos="fade-up">My Projects</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+                    <div class="card project-card shadow-sm">
+                        <div class="project-img-wrapper">
+                            <img src="https://via.placeholder.com/400x200/667eea/ffffff?text=E-Commerce+Platform" 
+                                 class="project-img" alt="Project 1">
+                            <div class="project-overlay">
+                                <a href="#" title="View Details"><i class="bi bi-eye-fill"></i></a>
+                                <a href="#" title="Live Demo"><i class="bi bi-link-45deg"></i></a>
+                                <a href="#" title="GitHub"><i class="bi bi-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">E-Commerce Platform</h5>
+                            <p class="card-text text-muted">
+                                A fully functional e-commerce website with shopping cart, payment integration, and admin dashboard.
+                            </p>
+                            <div class="mb-3">
+                                <span class="badge bg-secondary me-1">React</span>
+                                <span class="badge bg-secondary me-1">Node.js</span>
+                                <span class="badge bg-secondary">MongoDB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card project-card shadow-sm">
+                        <div class="project-img-wrapper">
+                            <img src="https://via.placeholder.com/400x200/764ba2/ffffff?text=Task+Manager+App" 
+                                 class="project-img" alt="Project 2">
+                            <div class="project-overlay">
+                                <a href="#" title="View Details"><i class="bi bi-eye-fill"></i></a>
+                                <a href="#" title="Live Demo"><i class="bi bi-link-45deg"></i></a>
+                                <a href="#" title="GitHub"><i class="bi bi-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Task Manager App</h5>
+                            <p class="card-text text-muted">
+                                A productivity app with real-time collaboration, drag-and-drop interface, and team management features.
+                            </p>
+                            <div class="mb-3">
+                                <span class="badge bg-secondary me-1">Vue.js</span>
+                                <span class="badge bg-secondary me-1">Firebase</span>
+                                <span class="badge bg-secondary">Tailwind</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card project-card shadow-sm">
+                        <div class="project-img-wrapper">
+                            <img src="https://via.placeholder.com/400x200/f093fb/ffffff?text=Weather+Dashboard" 
+                                 class="project-img" alt="Project 3">
+                            <div class="project-overlay">
+                                <a href="#" title="View Details"><i class="bi bi-eye-fill"></i></a>
+                                <a href="#" title="Live Demo"><i class="bi bi-link-45deg"></i></a>
+                                <a href="#" title="GitHub"><i class="bi bi-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Weather Dashboard</h5>
+                            <p class="card-text text-muted">
+                                Real-time weather application with interactive maps, forecasts, and location-based suggestions.
+                            </p>
+                            <div class="mb-3">
+                                <span class="badge bg-secondary me-1">JavaScript</span>
+                                <span class="badge bg-secondary me-1">API</span>
+                                <span class="badge bg-secondary">Bootstrap</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section id="experience" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center" data-aos="fade-up">Experience & Education</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h5 class="mb-2">Senior Full Stack Developer</h5>
+                        <p class="text-muted mb-2"><i class="bi bi-building me-2"></i>Tech Solutions Inc.</p>
+                        <p class="text-muted mb-2"><i class="bi bi-calendar me-2"></i>2022 - Present</p>
+                        <p>Led development of multiple enterprise applications, mentored junior developers, and implemented modern CI/CD pipelines.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h5 class="mb-2">Full Stack Developer</h5>
+                        <p class="text-muted mb-2"><i class="bi bi-building me-2"></i>Digital Innovations</p>
+                        <p class="text-muted mb-2"><i class="bi bi-calendar me-2"></i>2020 - 2022</p>
+                        <p>Developed responsive web applications using React and Node.js, improved application performance by 40%.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h5 class="mb-2">Bachelor's in Computer Science</h5>
+                        <p class="text-muted mb-2"><i class="bi bi-mortarboard me-2"></i>University of Technology</p>
+                        <p class="text-muted mb-2"><i class="bi bi-calendar me-2"></i>2016 - 2020</p>
+                        <p>Graduated with honors. Focus on software engineering, data structures, and web technologies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center" data-aos="fade-up">What Clients Say</h2>
+            <div class="row g-4">
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="0">
+                    <div class="testimonial-card">
+                        <div class="stars mb-2">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="text-muted mb-3">
+                            "John is an exceptional developer! He delivered our project ahead of schedule and exceeded all expectations. Highly recommended!"
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/60" alt="Client" class="testimonial-avatar">
+                            <div>
+                                <h6 class="mb-0">Sarah Johnson</h6>
+                                <small class="text-muted">CEO, StartupXYZ</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card">
+                        <div class="stars mb-2">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="text-muted mb-3">
+                            "Working with John was a pleasure. His attention to detail and problem-solving skills are outstanding. The website looks amazing!"
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/60" alt="Client" class="testimonial-avatar">
+                            <div>
+                                <h6 class="mb-0">Michael Chen</h6>
+                                <small class="text-muted">Marketing Director, TechCorp</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card">
+                        <div class="stars mb-2">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="text-muted mb-3">
+                            "John transformed our outdated website into a modern, responsive platform. His expertise in both design and development is impressive!"
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/60" alt="Client" class="testimonial-avatar">
+                            <div>
+                                <h6 class="mb-0">Emily Rodriguez</h6>
+                                <small class="text-muted">Founder, Creative Studio</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center" data-aos="fade-up">Get In Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="row mb-4">
+                        <div class="col-md-4 text-center mb-3" data-aos="fade-up" data-aos-delay="0">
+                            <div class="bg-white p-4 rounded shadow-sm">
+                                <i class="bi bi-geo-alt text-primary display-5 mb-3"></i>
+                                <h6>Location</h6>
+                                <p class="text-muted mb-0">New York, USA</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center mb-3" data-aos="fade-up" data-aos-delay="100">
+                            <div class="bg-white p-4 rounded shadow-sm">
+                                <i class="bi bi-envelope text-primary display-5 mb-3"></i>
+                                <h6>Email</h6>
+                                <p class="text-muted mb-0">john@example.com</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center mb-3" data-aos="fade-up" data-aos-delay="200">
+                            <div class="bg-white p-4 rounded shadow-sm">
+                                <i class="bi bi-phone text-primary display-5 mb-3"></i>
+                                <h6>Phone</h6>
+                                <p class="text-muted mb-0">+1 234 567 8900</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card shadow-sm border-0" data-aos="fade-up">
+                        <div class="card-body p-4">
+                            <p class="text-muted text-center mb-4">
+                                Have a project in mind? Let's work together!
+                            </p>
+                            <form id="contactForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" placeholder="your.email@example.com" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="subject" placeholder="Project Inquiry" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="bi bi-send me-2"></i>Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mb-4">
+                    <h5 class="mb-3">John Doe</h5>
+                    <p class="text-muted">Full Stack Developer & Designer</p>
+                </div>
+            </div>
+            <div class="mb-4">
+                <a href="#" class="social-icon" title="GitHub">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+                <a href="#" class="social-icon" title="Twitter">
+                    <i class="bi bi-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" title="Instagram">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                    <i class="bi bi-envelope"></i>
+                </a>
+            </div>
+            <hr class="bg-light">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="mb-2">&copy; 2025 John Doe. All Rights Reserved.</p>
+                    <p class="small text-muted">Built with <i class="bi bi-heart-fill text-danger"></i> using Bootstrap 5</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" title="Back to top">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse.classList.contains('show')) {
+                        navbarCollapse.classList.remove('show');
+                    }
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Typing effect
+        const texts = ['Full Stack Developer', 'UI/UX Designer', 'Problem Solver', 'Tech Enthusiast'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingElement = document.getElementById('typingText');
+
+        function typeEffect() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        typeEffect();
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter-number');
+        let hasAnimated = false;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.ceil(current);
+                        setTimeout(updateCounter, 20);
+                    } else {
+                        counter.textContent = target + '+';
+                    }
+                };
+
+                updateCounter();
+            });
+        };
+
+        // Trigger counter animation on scroll
+        window.addEventListener('scroll', () => {
+            const statsSection = document.querySelector('.counter-box');
+            if (statsSection && !hasAnimated) {
+                const sectionTop = statsSection.getBoundingClientRect().top;
+                if (sectionTop < window.innerHeight - 100) {
+                    hasAnimated = true;
+                    animateCounters();
+                }
+            }
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message (you can replace this with actual form submission)
+            alert('Thank you for your message! I will get back to you soon.');
+            this.reset();
+        });
+
+        // Skill bars animation
+        const animateSkillBars = () => {
+            const skillBars = document.querySelectorAll('.progress-bar');
+            skillBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.transition = 'width 1.5s ease-in-out';
+                    bar.style.width = width;
+                }, 100);
+            });
+        };
+
+        // Trigger skill bars animation when skills section is in view
+        const skillsSection = document.getElementById('skills');
+        let skillsAnimated = false;
+
+        window.addEventListener('scroll', () => {
+            if (skillsSection && !skillsAnimated) {
+                const sectionTop = skillsSection.getBoundingClientRect().top;
+                if (sectionTop < window.innerHeight - 100) {
+                    skillsAnimated = true;
+                    animateSkillBars();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

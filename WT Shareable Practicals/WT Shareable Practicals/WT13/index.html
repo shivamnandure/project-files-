@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipe Book</title>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <style>
+        .recipe-card {
+            margin: 10px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .recipe-img {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+        .recipe-time {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin: 5px 5px 5px 0;
+        }
+        .difficulty {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin: 5px 0;
+        }
+        .difficulty.easy { background: #d4edda; color: #155724; }
+        .difficulty.medium { background: #fff3cd; color: #856404; }
+        .difficulty.hard { background: #f8d7da; color: #721c24; }
+        .ingredient-list li, .steps-list li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        .category-icon {
+            font-size: 36px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Home Page -->
+<div data-role="page" id="home">
+    <div data-role="header" data-position="fixed">
+        <h1>🍳 Recipe Book</h1>
+    </div>
+
+    <div data-role="content">
+        <h2>Welcome to Recipe Book!</h2>
+        <p>Discover delicious recipes from around the world. Browse by category below:</p>
+        
+        <div data-role="controlgroup" data-type="vertical">
+            <a href="#breakfast" data-role="button" data-icon="star" data-theme="b">
+                <div class="category-icon">🥞</div>
+                Breakfast Recipes
+            </a>
+            <a href="#lunch" data-role="button" data-icon="star" data-theme="b">
+                <div class="category-icon">🥗</div>
+                Lunch Recipes
+            </a>
+            <a href="#dinner" data-role="button" data-icon="star" data-theme="b">
+                <div class="category-icon">🍝</div>
+                Dinner Recipes
+            </a>
+            <a href="#desserts" data-role="button" data-icon="star" data-theme="b">
+                <div class="category-icon">🍰</div>
+                Desserts
+            </a>
+        </div>
+
+        <h3 style="margin-top: 30px;">Featured Recipe</h3>
+        <div class="recipe-card">
+            <a href="#recipe-pasta" data-transition="slide">
+                <div class="recipe-img">🍝</div>
+                <div style="padding: 15px; background: white;">
+                    <h3 style="margin: 0 0 10px 0;">Spaghetti Carbonara</h3>
+                    <p style="margin: 0; color: #666;">Classic Italian pasta with creamy egg sauce and crispy bacon</p>
+                    <div style="margin-top: 10px;">
+                        <span class="recipe-time">⏱️ 25 mins</span>
+                        <span class="difficulty medium">Medium</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <h4>Happy Cooking! 👨‍🍳</h4>
+    </div>
+</div>
+
+<!-- Breakfast Page -->
+<div data-role="page" id="breakfast">
+    <div data-role="header" data-position="fixed">
+        <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+        <h1>🥞 Breakfast</h1>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview" data-inset="true">
+            <li>
+                <a href="#recipe-pancakes">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23FFB347' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🥞%3C/text%3E%3C/svg%3E" alt="Pancakes">
+                    <h3>Fluffy Pancakes</h3>
+                    <p>Light and fluffy breakfast pancakes</p>
+                    <p class="ui-li-aside">⏱️ 20 mins</p>
+                </a>
+            </li>
+            <li>
+                <a href="#recipe-omelette">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23FFD700' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🍳%3C/text%3E%3C/svg%3E" alt="Omelette">
+                    <h3>Classic Omelette</h3>
+                    <p>Perfect French-style omelette</p>
+                    <p class="ui-li-aside">⏱️ 10 mins</p>
+                </a>
+            </li>
+            <li>
+                <a href="#recipe-toast">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23D2691E' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🍞%3C/text%3E%3C/svg%3E" alt="Toast">
+                    <h3>Avocado Toast</h3>
+                    <p>Healthy and delicious avocado on toast</p>
+                    <p class="ui-li-aside">⏱️ 5 mins</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home">Home</a></li>
+                <li><a href="#lunch" data-icon="star">Lunch</a></li>
+                <li><a href="#dinner" data-icon="star">Dinner</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Lunch Page -->
+<div data-role="page" id="lunch">
+    <div data-role="header" data-position="fixed">
+        <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+        <h1>🥗 Lunch</h1>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview" data-inset="true">
+            <li>
+                <a href="#recipe-caesar">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%2390EE90' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🥗%3C/text%3E%3C/svg%3E" alt="Salad">
+                    <h3>Caesar Salad</h3>
+                    <p>Classic Caesar with homemade dressing</p>
+                    <p class="ui-li-aside">⏱️ 15 mins</p>
+                </a>
+            </li>
+            <li>
+                <a href="#recipe-sandwich">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23F4A460' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🥪%3C/text%3E%3C/svg%3E" alt="Sandwich">
+                    <h3>Club Sandwich</h3>
+                    <p>Triple-decker classic club</p>
+                    <p class="ui-li-aside">⏱️ 15 mins</p>
+                </a>
+            </li>
+            <li>
+                <a href="#recipe-soup">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23FF6347' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🍲%3C/text%3E%3C/svg%3E" alt="Soup">
+                    <h3>Tomato Soup</h3>
+                    <p>Creamy homemade tomato soup</p>
+                    <p class="ui-li-aside">⏱️ 30 mins</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home">Home</a></li>
+                <li><a href="#breakfast" data-icon="star">Breakfast</a></li>
+                <li><a href="#dinner" data-icon="star">Dinner</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Dinner Page -->
+<div data-role="page" id="dinner">
+    <div data-role="header" data-position="fixed">
+        <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+        <h1>🍝 Dinner</h1>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview" data-inset="true">
+            <li>
+                <a href="#recipe-pasta">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23F0E68C' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🍝%3C/text%3E%3C/svg%3E" alt="Pasta">
+                    <h3>Spaghetti Carbonara</h3>
+                    <p>Classic Italian pasta</p>
+                    <p class="ui-li-aside">⏱️ 25 mins</p>
+                </a>
+            </li>
+            <li>
+                <a href="#recipe-steak">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%238B4513' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🥩%3C/text%3E%3C/svg%3E" alt="Steak">
+                    <h3>Grilled Steak</h3>
+                    <p>Perfectly grilled ribeye steak</p>
+                    <p class="ui-li-aside">⏱️ 20 mins</p>
+                </a>
+            </li>
+            <li>
+                <a href="#recipe-chicken">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23FFE4B5' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🍗%3C/text%3E%3C/svg%3E" alt="Chicken">
+                    <h3>Roasted Chicken</h3>
+                    <p>Herb-roasted whole chicken</p>
+                    <p class="ui-li-aside">⏱️ 90 mins</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home">Home</a></li>
+                <li><a href="#breakfast" data-icon="star">Breakfast</a></li>
+                <li><a href="#lunch" data-icon="star">Lunch</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Desserts Page -->
+<div data-role="page" id="desserts">
+    <div data-role="header" data-position="fixed">
+        <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+        <h1>🍰 Desserts</h1>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview" data-inset="true">
+            <li>
+                <a href="#recipe-brownies">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23654321' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🍫%3C/text%3E%3C/svg%3E" alt="Brownies">
+                    <h3>Chocolate Brownies</h3>
+                    <p>Fudgy chocolate brownies</p>
+                    <p class="ui-li-aside">⏱️ 40 mins</p>
+                </a>
+            </li>
+            <li>
+                <a href="#recipe-cake">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23FFB6C1' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🍰%3C/text%3E%3C/svg%3E" alt="Cake">
+                    <h3>Vanilla Cake</h3>
+                    <p>Moist vanilla layer cake</p>
+                    <p class="ui-li-aside">⏱️ 60 mins</p>
+                </a>
+            </li>
+            <li>
+                <a href="#recipe-cookies">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect fill='%23DEB887' width='80' height='80'/%3E%3Ctext x='50%25' y='50%25' font-size='40' text-anchor='middle' dy='.3em'%3E🍪%3C/text%3E%3C/svg%3E" alt="Cookies">
+                    <h3>Chocolate Chip Cookies</h3>
+                    <p>Classic chewy cookies</p>
+                    <p class="ui-li-aside">⏱️ 25 mins</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home">Home</a></li>
+                <li><a href="#breakfast" data-icon="star">Breakfast</a></li>
+                <li><a href="#lunch" data-icon="star">Lunch</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Recipe Detail: Spaghetti Carbonara -->
+<div data-role="page" id="recipe-pasta">
+    <div data-role="header" data-position="fixed">
+        <a href="#dinner" data-icon="back">Back</a>
+        <h1>Recipe Details</h1>
+        <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+    </div>
+
+    <div data-role="content">
+        <div class="recipe-img">🍝</div>
+        
+        <h2>Spaghetti Carbonara</h2>
+        <p>A classic Italian pasta dish with a creamy egg-based sauce, crispy bacon, and Parmesan cheese. Simple yet elegant!</p>
+        
+        <div>
+            <span class="recipe-time">⏱️ Prep: 10 mins</span>
+            <span class="recipe-time">🔥 Cook: 15 mins</span>
+            <span class="difficulty medium">Medium</span>
+        </div>
+
+        <div data-role="collapsible-set" data-inset="true" style="margin-top: 20px;">
+            <div data-role="collapsible" data-collapsed="false">
+                <h3>Ingredients (Serves 4)</h3>
+                <ul class="ingredient-list">
+                    <li>400g spaghetti</li>
+                    <li>200g bacon or pancetta, diced</li>
+                    <li>4 large eggs</li>
+                    <li>100g Parmesan cheese, grated</li>
+                    <li>2 cloves garlic, minced</li>
+                    <li>Salt and black pepper to taste</li>
+                    <li>Fresh parsley for garnish</li>
+                </ul>
+            </div>
+
+            <div data-role="collapsible">
+                <h3>Instructions</h3>
+                <ol class="steps-list">
+                    <li>Bring a large pot of salted water to boil. Cook spaghetti according to package directions until al dente.</li>
+                    <li>While pasta cooks, fry bacon in a large pan over medium heat until crispy. Add garlic and cook for 1 minute.</li>
+                    <li>In a bowl, whisk together eggs and Parmesan cheese. Season with black pepper.</li>
+                    <li>Reserve 1 cup of pasta water, then drain spaghetti.</li>
+                    <li>Remove pan from heat. Add hot spaghetti to bacon and toss.</li>
+                    <li>Quickly pour in egg mixture while tossing constantly. Add pasta water gradually to create a creamy sauce.</li>
+                    <li>Serve immediately with extra Parmesan and parsley.</li>
+                </ol>
+            </div>
+
+            <div data-role="collapsible">
+                <h3>Tips & Notes</h3>
+                <ul class="ingredient-list">
+                    <li><strong>Temperature:</strong> Make sure to remove pan from heat before adding eggs to prevent scrambling.</li>
+                    <li><strong>Cheese:</strong> Use freshly grated Parmesan for best results.</li>
+                    <li><strong>Variations:</strong> Add peas or mushrooms for extra vegetables.</li>
+                    <li><strong>Storage:</strong> Best served fresh, but leftovers can be refrigerated for 1-2 days.</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="#dinner" data-role="button" data-icon="back" data-theme="b">Back to Dinner Recipes</a>
+    </div>
+</div>
+
+<!-- Recipe Detail: Fluffy Pancakes -->
+<div data-role="page" id="recipe-pancakes">
+    <div data-role="header" data-position="fixed">
+        <a href="#breakfast" data-icon="back">Back</a>
+        <h1>Recipe Details</h1>
+        <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+    </div>
+
+    <div data-role="content">
+        <div class="recipe-img">🥞</div>
+        
+        <h2>Fluffy Pancakes</h2>
+        <p>Light, fluffy, and delicious breakfast pancakes that are perfect for lazy weekend mornings!</p>
+        
+        <div>
+            <span class="recipe-time">⏱️ Prep: 10 mins</span>
+            <span class="recipe-time">🔥 Cook: 10 mins</span>
+            <span class="difficulty easy">Easy</span>
+        </div>
+
+        <div data-role="collapsible-set" data-inset="true" style="margin-top: 20px;">
+            <div data-role="collapsible" data-collapsed="false">
+                <h3>Ingredients (Makes 8-10)</h3>
+                <ul class="ingredient-list">
+                    <li>2 cups all-purpose flour</li>
+                    <li>2 tablespoons sugar</li>
+                    <li>2 teaspoons baking powder</li>
+                    <li>1 teaspoon salt</li>
+                    <li>2 eggs</li>
+                    <li>1¾ cups milk</li>
+                    <li>¼ cup melted butter</li>
+                    <li>1 teaspoon vanilla extract</li>
+                </ul>
+            </div>
+
+            <div data-role="collapsible">
+                <h3>Instructions</h3>
+                <ol class="steps-list">
+                    <li>Mix flour, sugar, baking powder, and salt in a large bowl.</li>
+                    <li>In another bowl, whisk eggs, milk, melted butter, and vanilla.</li>
+                    <li>Pour wet ingredients into dry ingredients and stir until just combined (don't overmix!).</li>
+                    <li>Heat a griddle or pan over medium heat and lightly grease.</li>
+                    <li>Pour ¼ cup batter for each pancake.</li>
+                    <li>Cook until bubbles form on surface, then flip and cook until golden.</li>
+                    <li>Serve warm with maple syrup and butter!</li>
+                </ol>
+            </div>
+
+            <div data-role="collapsible">
+                <h3>Tips & Notes</h3>
+                <ul class="ingredient-list">
+                    <li><strong>Fluffiness:</strong> Don't overmix the batter - lumps are okay!</li>
+                    <li><strong>Temperature:</strong> Medium heat is key - too hot and they'll burn.</li>
+                    <li><strong>Toppings:</strong> Try fresh berries, whipped cream, or chocolate chips.</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="#breakfast" data-role="button" data-icon="back" data-theme="b">Back to Breakfast Recipes</a>
+    </div>
+</div>
+
+<!-- Recipe Detail: Chocolate Brownies -->
+<div data-role="page" id="recipe-brownies">
+    <div data-role="header" data-position="fixed">
+        <a href="#desserts" data-icon="back">Back</a>
+        <h1>Recipe Details</h1>
+        <a href="#home" data-icon="home" data-iconpos="notext">Home</a>
+    </div>
+
+    <div data-role="content">
+        <div class="recipe-img">🍫</div>
+        
+        <h2>Chocolate Brownies</h2>
+        <p>Rich, fudgy chocolate brownies with a crackly top and gooey center. Pure chocolate heaven!</p>
+        
+        <div>
+            <span class="recipe-time">⏱️ Prep: 15 mins</span>
+            <span class="recipe-time">🔥 Bake: 25 mins</span>
+            <span class="difficulty easy">Easy</span>
+        </div>
+
+        <div data-role="collapsible-set" data-inset="true" style="margin-top: 20px;">
+            <div data-role="collapsible" data-collapsed="false">
+                <h3>Ingredients (9x9 pan)</h3>
+                <ul class="ingredient-list">
+                    <li>½ cup butter, melted</li>
+                    <li>1 cup sugar</li>
+                    <li>2 eggs</li>
+                    <li>⅓ cup cocoa powder</li>
+                    <li>½ cup flour</li>
+                    <li>¼ teaspoon salt</li>
+                    <li>¼ teaspoon baking powder</li>
+                    <li>1 teaspoon vanilla extract</li>
+                    <li>Optional: chocolate chips or nuts</li>
+                </ul>
+            </div>
+
+            <div data-role="collapsible">
+                <h3>Instructions</h3>
+                <ol class="steps-list">
+                    <li>Preheat oven to 350°F (175°C). Grease and line a 9x9 inch pan.</li>
+                    <li>Mix melted butter and sugar until well combined.</li>
+                    <li>Beat in eggs one at a time, then add vanilla.</li>
+                    <li>Sift in cocoa powder, flour, salt, and baking powder. Mix until just combined.</li>
+                    <li>Fold in chocolate chips or nuts if using.</li>
+                    <li>Pour batter into prepared pan and spread evenly.</li>
+                    <li>Bake for 20-25 minutes until edges are set but center is slightly soft.</li>
+                    <li>Cool completely before cutting into squares.</li>
+                </ol>
+            </div>
+
+            <div data-role="collapsible">
+                <h3>Tips & Notes</h3>
+                <ul class="ingredient-list">
+                    <li><strong>Fudgy vs Cakey:</strong> For fudgier brownies, slightly underbake them.</li>
+                    <li><strong>Testing:</strong> Insert a toothpick - it should have moist crumbs, not be clean.</li>
+                    <li><strong>Storage:</strong> Keep in airtight container for up to 4 days.</li>
+                    <li><strong>Pro tip:</strong> Let cool completely for clean cuts!</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="#desserts" data-role="button" data-icon="back" data-theme="b">Back to Desserts</a>
+    </div>
+</div>
+
+</body>
+</html>
