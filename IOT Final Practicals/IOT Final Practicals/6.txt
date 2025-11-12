@@ -1,0 +1,16 @@
+void setup() { 
+Serial.begin(9600); 
+Serial.println("Enter a number to square:"); 
+} 
+void loop() { 
+if (Serial.available() > 0) { 
+String inputStr = Serial.readStringUntil('\n'); 
+int num = inputStr.toInt(); 
+int square = num * num; 
+Serial.print("Square of "); 
+Serial.print(num); 
+Serial.print(" is: "); 
+Serial.println(square); 
+Serial.println("Enter another number:"); 
+} 
+}

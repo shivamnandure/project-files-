@@ -1,0 +1,33 @@
+#include <DHT.h> 
+#define DHTPIN 8 
+#define DHTTYPE DHT11 
+DHT dht(DHTPIN, DHTTYPE); 
+float maxTempC = -1000.0; // initialize to a very low temp 
+float minTempC = 1000.0;  // initialize to a very high temp 
+void setup() { 
+Serial.begin(9600); 
+dht.begin(); 
+} 
+void loop() { 
+float tempC = dht.readTemperature(); 
+if (isnan(tempC)) { 
+Serial.println("Failed to read from DHT sensor!"); 
+} else { 
+// Update max and min temperatures 
+if (tempC > maxTempC) maxTempC = tempC; 
+if (tempC < minTempC) minTempC = tempC; 
+float tempF = tempC * 9.0 / 5.0 + 32.0; 
+Serial.print("Current Temp: "); 
+Serial.print(tempC); 
+Serial.print(" °C / "); 
+Serial.print(tempF); 
+Serial.println(" °F"); 
+Serial.print("Max Temp: "); 
+Serial.print(maxTempC); 
+Serial.print(" °C"); 
+Serial.print(" | Min Temp: "); 
+Serial.print(minTempC); 
+Serial.println(" °C"); 
+} 
+delay(2000); 
+}

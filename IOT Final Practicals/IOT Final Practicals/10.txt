@@ -1,0 +1,30 @@
+// Define pin numbers for the LEDs 
+const int redLED = 11; 
+const int yellowLED = 12; 
+const int greenLED = 13; 
+void setup() { 
+// Set LED pins as OUTPUT 
+pinMode(redLED, OUTPUT); 
+pinMode(yellowLED, OUTPUT); 
+pinMode(greenLED, OUTPUT); 
+} 
+void loop() { 
+// Green light ON for 5 seconds 
+digitalWrite(greenLED, HIGH); 
+digitalWrite(redLED, LOW); 
+digitalWrite(yellowLED, LOW); 
+delay(5000); 
+// Yellow light ON for 2 seconds (before red) 
+digitalWrite(greenLED, LOW); 
+digitalWrite(yellowLED, HIGH); 
+delay(2000); 
+// Red light ON for 5 seconds 
+digitalWrite(yellowLED, LOW); 
+digitalWrite(redLED, HIGH); 
+delay(5000); 
+// Yellow light ON for 2 seconds (before green) 
+digitalWrite(redLED, LOW); 
+digitalWrite(yellowLED, HIGH); 
+delay(2000); 
+// Repeat 
+}

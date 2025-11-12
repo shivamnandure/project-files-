@@ -1,0 +1,32 @@
+#include <DHT.h> 
+// Define pins 
+#define DHTPIN 7         
+// DHT11 data pin 
+#define DHTTYPE DHT11    // DHT sensor type 
+#define BUZZER_PIN 3     // Buzzer pin 
+#define TEMP_THRESHOLD 30.0  // Threshold temperature in °C 
+DHT dht(DHTPIN, DHTTYPE); 
+void setup() { 
+Serial.begin(9600);       
+// Start Serial Monitor 
+dht.begin();               // Initialize DHT sensor 
+pinMode(BUZZER_PIN, OUTPUT);  // Buzzer as output 
+digitalWrite(BUZZER_PIN, LOW); 
+} 
+void loop() { 
+delay(2000); // Wait a bit between readings 
+float temperature = dht.readTemperature();  // Read temperature in °C 
+if (isnan(temperature)) { 
+Serial.println("Failed to read from DHT sensor!"); 
+return; 
+} 
+Serial.print("Temperature: "); 
+Serial.print(temperature); 
+Serial.println(" *C"); 
+if (temperature > TEMP_THRESHOLD) { 
+Serial.println("Temperature above threshold! Activating buzzer."); 
+digitalWrite(BUZZER_PIN, HIGH);  // Turn on buzzer 
+} else { 
+digitalWrite(BUZZER_PIN, LOW);   // Turn off buzzer 
+} 
+}

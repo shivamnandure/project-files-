@@ -1,0 +1,39 @@
+int redLED = 11;  
+all 
+int yellowLED = 12; 
+int greenLED = 13; 
+void setup() { 
+Serial.begin(9600); 
+commands 
+pinMode(redLED, OUTPUT); 
+pinMode(yellowLED, OUTPUT); 
+pinMode(greenLED, OUTPUT); 
+Serial.println("Enter r, y, g, or b:"); 
+} 
+void loop() { 
+to 
+ensure 
+proper 
+LED 
+response. 
+if (Serial.available()) { 
+char input = Serial.read(); 
+digitalWrite(redLED, LOW); 
+digitalWrite(yellowLED, LOW); 
+digitalWrite(greenLED, LOW); 
+if (input == 'r') { 
+digitalWrite(redLED, HIGH); 
+} else if (input == 'y') { 
+digitalWrite(yellowLED, HIGH); 
+} else if (input == 'g') { 
+digitalWrite(greenLED, HIGH); 
+} else if (input == 'b') { 
+for (int i = 0; i < 3; i++) { 
+digitalWrite(greenLED, HIGH); 
+delay(300); 
+digitalWrite(greenLED, LOW); 
+delay(300); 
+} 
+} 
+} 
+}

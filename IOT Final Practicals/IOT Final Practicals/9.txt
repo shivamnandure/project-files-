@@ -1,0 +1,15 @@
+#include "DHT.h" 
+#define DHTPIN   8      // digital pin connected to DATA 
+#define DHTTYPE  DHT11 
+DHT dht(DHTPIN, DHTTYPE); 
+void setup() { 
+Serial.begin(9600); 
+dht.begin(); 
+Serial.println("Temperature"); // plotter label 
+} 
+void loop() { 
+delay(2000); // sensor needs 1–2 seconds 
+float t = dht.readTemperature(); // °C 
+if (isnan(t)) return; 
+Serial.println(t); // send to Serial Plotter 
+}
