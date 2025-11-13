@@ -1,0 +1,42 @@
+// Traffic Signal Simulation Program
+// Using Arduino Uno
+
+// Define LED pin numbers
+const int redLED = 11;
+const int yellowLED = 12;
+const int greenLED = 13;
+
+void setup() {
+  // Set LED pins as OUTPUT
+  pinMode(redLED, OUTPUT);
+  pinMode(yellowLED, OUTPUT);
+  pinMode(greenLED, OUTPUT);
+}
+
+void loop() {
+  // Green light ON for 5 seconds
+  digitalWrite(greenLED, HIGH);
+  digitalWrite(yellowLED, LOW);
+  digitalWrite(redLED, LOW);
+  delay(5000);
+
+  // Yellow light ON for 2 seconds before Red
+  digitalWrite(greenLED, LOW);
+  digitalWrite(yellowLED, HIGH);
+  digitalWrite(redLED, LOW);
+  delay(2000);
+
+  // Red light ON for 5 seconds
+  digitalWrite(greenLED, LOW);
+  digitalWrite(yellowLED, LOW);
+  digitalWrite(redLED, HIGH);
+  delay(5000);
+
+  // Yellow light ON for 2 seconds before Green
+  digitalWrite(greenLED, LOW);
+  digitalWrite(yellowLED, HIGH);
+  digitalWrite(redLED, LOW);
+  delay(2000);
+
+  // Loop repeats automatically
+}

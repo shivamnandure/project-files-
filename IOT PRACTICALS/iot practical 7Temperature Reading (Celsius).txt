@@ -1,0 +1,30 @@
+iot practical 7
+Temperature Reading (Celsius)
+
+#include <DHT.h>
+
+// Define sensor pin and type
+#define DHTPIN 8        // DHT11 data pin connected to digital pin 8
+#define DHTTYPE DHT11   // Define sensor type as DHT11
+
+DHT dht(DHTPIN, DHTTYPE);  // Create DHT object
+
+void setup() {
+  Serial.begin(9600);   // Start Serial Monitor at 9600 baud rate
+  dht.begin();          // Initialize the DHT11 sensor
+}
+
+void loop() {
+  float temperature = dht.readTemperature();  // Read temperature in °C
+
+  // Check if reading failed
+  if (isnan(temperature)) {
+    Serial.println("Failed to read from DHT11 sensor!");
+  } else {
+    Serial.print("Temperature: ");
+    Serial.print(temperature);
+    Serial.println(" °C");
+  }
+
+  delay(2000);  // Wait 2 seconds before the next reading
+}

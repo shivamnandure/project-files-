@@ -1,0 +1,57 @@
+IOT PRACTICAL 8 To read temperature from the DHT11 sensor and display the current, maximum, and minimum temperatures in both Celsius and Fahrenheit.
+
+
+#include <DHT.h>
+
+// Define DHT11 sensor pin and type
+#define DHTPIN 8          // Data pin connected to digital pin 8
+#define DHTTYPE DHT11     // Sensor type: DHT11
+
+DHT dht(DHTPIN, DHTTYPE); // Create DHT sensor object
+
+// Variables to store max and min temperature
+float maxTempC = -1000.0;  // Start with a very low temperature
+float minTempC = 1000.0;   // Start with a very high temperature
+
+void setup() {
+  Serial.begin(9600);  // Start Serial Monitor
+  dht.begin();         // Initialize DHT sensor
+
+  Serial.println("=== Temperature Monitoring with Min/Max and °F Display ===");
+  Serial.println();
+}
+
+void loop() {
+  // Read temperature in Celsius
+  float tempC = dht.readTemperature();
+
+  // Check if reading failed
+  if (isnan(tempC)) {
+    Serial.println("Failed to read from DHT11 sensor!");
+  } 
+  else {
+    // Update maximum and minimum values
+    if (tempC > maxTempC) maxTempC = tempC;
+    if (tempC < minTempC) minTempC = tempC;
+
+    // Convert Celsius to Fahrenheit
+    float tempF = (tempC * 9.0 / 5.0) + 32.0;
+
+    // Display temperature readings
+    Serial.print("Current Temp: ");
+    Serial.print(tempC);
+    Serial.print(" °C / ");
+    Serial.print(tempF);
+    Serial.println(" °F");
+
+    Serial.print("Max Temp: ");
+    Serial.print(maxTempC);
+    Serial.print(" °C  |  Min Temp: ");
+    Serial.print(minTempC);
+    Serial.println(" °C");
+
+    Serial.println("------------------------------");
+  }
+
+  delay(2000); // Wait 2 seconds before next reading
+}

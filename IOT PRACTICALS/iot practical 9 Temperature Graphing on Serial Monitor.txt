@@ -1,0 +1,31 @@
+iot practical 9 
+Temperature Graphing on Serial Monitor
+
+
+#include <DHT.h>   // Include DHT sensor library
+
+// Define DHT sensor connection
+#define DHTPIN 8        // DHT11 data pin connected to digital pin 8
+#define DHTTYPE DHT11   // Sensor type: DHT11
+
+DHT dht(DHTPIN, DHTTYPE);  // Create DHT object
+
+void setup() {
+  Serial.begin(9600);   // Start Serial Monitor
+  dht.begin();          // Initialize DHT sensor
+  Serial.println("Temperature (°C)");  // Label for Serial Plotter
+}
+
+void loop() {
+  delay(2000);                 // Wait 2 seconds between readings
+  float tempC = dht.readTemperature();  // Read temperature in °C
+
+  // Check if reading failed
+  if (isnan(tempC)) {
+    Serial.println("Sensor error!");
+    return;
+  }
+
+  // Print temperature for Serial Plotter
+  Serial.println(tempC);  
+}
